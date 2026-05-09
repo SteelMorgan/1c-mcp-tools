@@ -64,6 +64,7 @@
 		<ChildObjects>
 			<Language>Русский</Language>
 			<Subsystem>mcp_MCPСервер</Subsystem>
+			<Subsystem>mcp_Мсп_Провайдеры</Subsystem>
 			<Role>mcp_ОсновнаяРоль</Role>
 			<CommonModule>mcp_ОбщегоНазначения</CommonModule>
 			<CommonModule>mcp_КонтейнерыПовтИсп</CommonModule>
