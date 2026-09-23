@@ -66,12 +66,14 @@
 			<Subsystem>mcp_MCPСервер</Subsystem>
 			<Subsystem>mcp_Мсп_Провайдеры</Subsystem>
 			<Role>mcp_ОсновнаяРоль</Role>
+			<CommonModule>mcp_ROCTUPГраницаДанныхСервер</CommonModule>
 			<CommonModule>mcp_ОбщегоНазначения</CommonModule>
 			<CommonModule>mcp_КонтейнерыПовтИсп</CommonModule>
 			<CommonModule>mcp_Метаданные</CommonModule>
 			<CommonModule>mcp_Выполнение</CommonModule>
 			<CommonModule>mcp_Содержимое</CommonModule>
 			<HTTPService>mcp_APIBackend</HTTPService>
+			<DataProcessor>mcp_ИнструментыROCTUP</DataProcessor>
 			<DataProcessor>mcp_УправлениеСервером</DataProcessor>
 			<DataProcessor>mcp_ИнструментДанныеОКонфигурации</DataProcessor>
 			<DataProcessor>mcp_РесурсОписаниеСинтаксисаВстроенногоЯзыка</DataProcessor>
