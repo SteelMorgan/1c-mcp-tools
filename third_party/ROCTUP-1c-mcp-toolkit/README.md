@@ -11,9 +11,11 @@ Mutable masking policy, reversible mapping, history, submit and reveal controls 
 not part of this boundary. The upstream HTTP/proxy/restart/screenshot/business tools
 are not registered.
 
-`native_components/` contains the pinned upstream native sources used for the
-Linux x86-64 build. Runtime templates contain ELF builds made without source
-changes in Ubuntu 20.04; exact hashes and logs are preserved in the task artifacts.
+`native_components/` contains the pinned upstream native sources and the TASK-221
+QueryLineageAnalyzer parser adaptation with its regression test. Runtime templates
+contain ELF builds made in Ubuntu 20.04; the adapted QueryLineageAnalyzer binary
+matches the source recorded in `native-provenance.md`. Build hashes and test results
+are recorded there; build logs are preserved in the task artifacts.
 
 Redistribution of the imported/adapted work carries GPL-3.0 obligations. This
 notice does not relicense unrelated framework code.

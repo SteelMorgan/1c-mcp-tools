@@ -223,11 +223,21 @@ std::shared_ptr<ExprNode> Parser::ParsePrimary() {
         case TokenKind::KeywordFalse:
             return MakeExpr(ExprNode::Kind::Literal, token.text);
         case TokenKind::KeywordRefs: {
-            auto node = MakeExpr(ExprNode::Kind::Literal, token.text);
-            if (Check(TokenKind::Identifier) || IsKeyword(Peek().kind)) {
+            //**agent TASK-221 [23.09.2026 18:42:07]
+            //auto node = MakeExpr(ExprNode::Kind::Literal, token.text);
+            //if (Check(TokenKind::Identifier) || IsKeyword(Peek().kind)) {
+            //    node->text += " " + ParseNamePath();
+            //}
+            //return node;
+            // Тип после оператора ССЫЛКА начинается именем метаданных; без него
+            // тот же токен обозначает поле Ссылка в списке выборки.
+            if (Check(TokenKind::Identifier)) {
+                auto node = MakeExpr(ExprNode::Kind::Literal, token.text);
                 node->text += " " + ParseNamePath();
+                return node;
             }
-            return node;
+            return parse_field_ref(token);
+            //**agent TASK-221
         }
         case TokenKind::KeywordCase:
             return ParseCaseExpression();

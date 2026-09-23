@@ -3,7 +3,7 @@
 ## Upstream и область
 
 - Upstream: `ROCTUP/1c-mcp-toolkit`, pin `fe12903af7a367a9d67dd055c13f4b59bb59d83c`.
-- Native source `native_components/RegexHelper` и `native_components/QueryLineageAnalyzer` в этом каталоге проверены байт-в-байт относительно pinned source; исходники не изменялись.
+- `native_components/RegexHelper` сохранён байт-в-байт относительно pinned source. `native_components/QueryLineageAnalyzer` адаптирован в TASK-221: `src/parser.cpp` разбирает отдельное поле `Ссылка` как ссылку на поле, сохраняя `Поле ССЫЛКА Справочник.X` как оператор с типом; добавлен `tests/test_main.cpp`.
 - Этот документ описывает только native C++ build. Provenance скопированных BSL-функций будет отдельным artifact от worker-а, который выполнял перенос; здесь BSL provenance не реконструируется.
 
 ## Linux build recipe
@@ -15,7 +15,7 @@
 - toolchain: GCC 9.4.0, CMake 3.16.3, GNU ld 2.34, glibc 2.31;
 - build concurrency: максимум `-j2`.
 
-Команды production targets (тестовые исходники в upstream pin отсутствуют):
+RegexHelper собран по исходному рецепту. Для адаптированного QueryLineageAnalyzer в source catalog добавлен native test target:
 
 ```sh
 mkdir -p /src/build_linux
@@ -25,11 +25,12 @@ cmake --build . -- -j2
 
 mkdir -p /src/build_linux
 cd /src/build_linux
-cmake .. -DCMAKE_BUILD_TYPE=Release -DQUERY_LINEAGE_BUILD_TESTS=OFF
+cmake .. -DCMAKE_BUILD_TYPE=Release -DQUERY_LINEAGE_BUILD_TESTS=ON
 cmake --build . -- -j2
+ctest --output-on-failure
 ```
 
-Upstream test targets не запускались: отсутствуют `tests/smoke_test.cpp` и `tests/test_main.cpp`. Загрузка native components в 1С и 1С runtime tests также не выполнялись в этой фазе.
+В upstream pin тестовых исходников нет. Добавленный `tests/test_main.cpp` прошёл в Ubuntu 20.04 builder (`ctest`: 1/1): отдельное `Ссылка КАК Ref`, обычное `Наименование КАК ФИО`, обогащение `schema.columns[].sources`, `Ссылка ИЗ` без алиаса и `Поле ССЫЛКА Справочник.X`. Загрузка новой библиотеки платформой 1С и 1С runtime tests не выполнялись в этой фазе.
 
 ## Dependencies
 
@@ -38,12 +39,12 @@ Upstream test targets не запускались: отсутствуют `tests
 
 ## Verified outputs
 
-Артефакты собраны без source rewrites и сохранены в task build stage:
+RegexHelper не менялся; QueryLineageAnalyzer собран из адаптированного source catalog:
 
 | Component | SHA-256 | Size | ABI notes |
 |---|---|---:|---|
 | `RegexHelper.so` | `2ebf13d907656d3340c4c842df5a7dd6e970422ae4046280dfabe6fa4f8770d9` | 425456 bytes | ELF64 x86-64, SONAME `RegexHelper.so`, max GLIBC `2.14` |
-| `QueryLineageAnalyzer.so` | `267fea399cd1475b187a4f0c2db95d0ef3b90a466b0bb78369b062f2f4b03f04` | 371608 bytes | ELF64 x86-64, SONAME `QueryLineageAnalyzer.so`, max GLIBC `2.14` |
+| `QueryLineageAnalyzer.so` | `e89e8b523255e22b7796b630e632a2bf6682a9e3eb6b6f843cbf709861c5ac17` | 371608 bytes | ELF64 x86-64, SONAME `QueryLineageAnalyzer.so`, max GLIBC `2.14` |
 
 Для обеих библиотек проверены exports `GetClassNames`, `GetClassObject`, `DestroyObject`, `SetPlatformCapabilities` (4/4). Runtime dependencies: `libstdc++.so.6`, `libgcc_s.so.1`, `libc.so.6`, `libm.so.6`; PCRE2 статически включён в RegexHelper. Максимальные C++ ABI symbols: `GLIBCXX_3.4.21`, `CXXABI_1.3.9`.
 
@@ -56,5 +57,4 @@ Upstream test targets не запускались: отсутствуют `tests
 - `pcre2-10.46-LICENCE.md`: SHA-256 `9cf7ac6976099a1d856826d3ef1b093bd6b84489dc6100628ac79e740cf9885a`;
 - `nlohmann-json-LICENSE.MIT`: SHA-256 `46a65cffd1ea955132d95a8dd921640714a8d6b537d2e4e482d31145ae95b603`.
 
-Этот source catalog является носителем native sources и dependency notices. Mirror в `GBIG PAM/src/exts/mcp_tools/third_party/ROCTUP-1c-mcp-toolkit` на момент аудита содержит только `LICENSE.GPL-3.0.txt` (тот же SHA-256) и README; dependency notices и native sources в mirror не дублируются. Дополнительное license coverage не предполагается.
-
+Этот source catalog содержит полный соответствующий native C++ source, адаптацию, тест и notices под GPL-3.0. Mirror в `GBIG PAM/src/exts/mcp_tools/third_party/ROCTUP-1c-mcp-toolkit` содержит notices и provenance, но не дублирует C++ source. При распространении одного mirror вместе с бинарным `Template.bin` нужно обеспечить получателю доступ к этому изменённому соответствующему source; исходный upstream pin сам по себе недостаточен.
