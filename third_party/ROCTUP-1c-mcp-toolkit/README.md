@@ -1,4 +1,4 @@
-# ROCTUP 1c-mcp-toolkit — TASK-221
+# ROCTUP 1c-mcp-toolkit
 
 Imported from `https://github.com/ROCTUP/1c-mcp-toolkit` at commit
 `fe12903af7a367a9d67dd055c13f4b59bb59d83c` under GPL-3.0.
@@ -11,11 +11,15 @@ Mutable masking policy, reversible mapping, history, submit and reveal controls 
 not part of this boundary. The upstream HTTP/proxy/restart/screenshot/business tools
 are not registered.
 
-`native_components/` contains the pinned upstream native sources and the TASK-221
-QueryLineageAnalyzer parser adaptation with its regression test. Runtime templates
-contain ELF builds made in Ubuntu 20.04; the adapted QueryLineageAnalyzer binary
-matches the source recorded in `native-provenance.md`. Build hashes and test results
-are recorded there; build logs are preserved in the task artifacts.
+`native_components/` contains the QueryLineageAnalyzer parser
+adaptation with its regression test. Runtime templates contain ELF builds made
+in Ubuntu 20.04; the adapted QueryLineageAnalyzer binary matches the source
+recorded in `native-provenance.md`. Build hashes and test results are recorded
+there; build logs are preserved in the task artifacts.
+
+`RegexHelper` (source, binary template and its PCRE2 dependency) was removed
+together with its sole consumer — the dead regex path of
+`mcp_ИнструментыROCTUP/ObjectModule`. Only `QueryLineageAnalyzer` is shipped.
 
 Redistribution of the imported/adapted work carries GPL-3.0 obligations. This
 notice does not relicense unrelated framework code.

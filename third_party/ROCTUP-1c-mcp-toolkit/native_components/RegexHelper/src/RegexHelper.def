@@ -1,6 +1,0 @@
-LIBRARY RegexHelper
-EXPORTS
-    GetClassNames
-    GetClassObject
-    DestroyObject
-    SetPlatformCapabilities

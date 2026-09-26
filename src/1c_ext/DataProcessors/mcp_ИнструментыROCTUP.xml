@@ -46,8 +46,6 @@
 		</Properties>
 		<ChildObjects>
 			<Template>QueryLineageAnalyzer</Template>
-			<Template>RegexHelper</Template>
-			<Template>НастройкиRegexПоУмолчанию</Template>
 		</ChildObjects>
 	</DataProcessor>
 </MetaDataObject>

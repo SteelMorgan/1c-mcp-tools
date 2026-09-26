@@ -607,7 +607,7 @@
 
 Функция ВыполнитьЗапрос(ТекстЗапроса, ПараметрыЗапроса, Лимит, ВключитьСхему = Ложь)
 
-//**agent TASK-225 [26.09.2026]
+//**agent TASK-225 [26.09.2026 14:00:00]
 	// Разбор до исполнения: текст ошибки разбора передаём сервису -
 	// после резолва mask-токенов в нём могут быть исходные значения,
 	// отдачу текста решает сервис (TASK-225, ревью-2 N-1: сервис снимает
@@ -707,7 +707,7 @@
 		КонецЕсли;
 		
 	Исключение
-//**agent TASK-225 [26.09.2026]
+//**agent TASK-225 [26.09.2026 14:00:00]
 //		Возврат Новый Структура("success, error", Ложь, ОписаниеОшибки());
 		// Ошибка исполнения может содержать значения данных (блокировки,
 		// преобразования) - агенту только стабильный код.
@@ -717,7 +717,7 @@
 	
 КонецФункции
 
-//++agent TASK-225 [26.09.2026] ревью-2 N-5
+//++agent TASK-225 [26.09.2026 14:00:00] ревью-2 N-5
 // Отрезает из ОписаниеОшибки() префикс "{модуль(строка)}: Ошибка при
 // вызове метода контекста (...)" - имя модуля и номер строки расширения
 // агенту не нужны. Возвращает Структуру(message, position): message -
@@ -6633,18 +6633,20 @@
 
 КонецФункции
 
-Функция ПримечаниеОбАнонимизации()
-	М = Новый Массив;
-	М.Добавить("");
-	М.Добавить("NOTE: Anonymization is enabled for this tool.");
-	М.Добавить("Some returned values (person names, organization names, TINs, and other");
-	М.Добавить("personal data) are replaced with anonymous tokens in the format");
-	М.Добавить("[CATEGORY-NNNNN] (e.g. [ORG-00001], [PER-00042], [INN-00001]).");
-	М.Добавить("Tokens are stable within the current session.");
-	М.Добавить("Do not attempt to interpret these tokens as meaningful data.");
-	М.Добавить("Tokens can be used in subsequent requests.");
-	Возврат СоединитьМассив(М, Символы.ПС);
-КонецФункции
+//--agent TASK-225 [26.09.2026 14:00:00]
+//Функция ПримечаниеОбАнонимизации()
+//	М = Новый Массив;
+//	М.Добавить("");
+//	М.Добавить("NOTE: Anonymization is enabled for this tool.");
+//	М.Добавить("Some returned values (person names, organization names, TINs, and other");
+//	М.Добавить("personal data) are replaced with anonymous tokens in the format");
+//	М.Добавить("[CATEGORY-NNNNN] (e.g. [ORG-00001], [PER-00042], [INN-00001]).");
+//	М.Добавить("Tokens are stable within the current session.");
+//	М.Добавить("Do not attempt to interpret these tokens as meaningful data.");
+//	М.Добавить("Tokens can be used in subsequent requests.");
+//	Возврат СоединитьМассив(М, Символы.ПС);
+//КонецФункции
+//--agent TASK-225
 
 Функция ОписаниеToolExecuteQuery(АнонимизацияВключена = Ложь)
 	М = Новый Массив;
@@ -6692,30 +6694,34 @@
 	М.Добавить("        },");
 	М.Добавить("        limit=50");
 	М.Добавить("    )");
-	Если АнонимизацияВключена Тогда
-		М.Добавить(ПримечаниеОбАнонимизации());
-	КонецЕсли;
+	//--agent TASK-225 [26.09.2026 14:00:00]
+//	Если АнонимизацияВключена Тогда
+//		М.Добавить(ПримечаниеОбАнонимизации());
+//	КонецЕсли;
+	//--agent TASK-225
 	Возврат СоединитьМассив(М, Символы.ПС);
 КонецФункции
 
-Функция ОписаниеToolSubmitForDeanonymization()
-	М = Новый Массив;
-	М.Добавить("Submit the final user-facing response for de-anonymization display.");
-	М.Добавить("");
-	М.Добавить("You MUST call this tool if, and only if, your final response to the user contains");
-	М.Добавить("anonymization tokens in the form [CATEGORY-NNNNN], for example [ORG-00001],");
-	М.Добавить("[PER-00042], [INN-00001].");
-	М.Добавить("");
-	М.Добавить("Call this tool exactly once, immediately before sending the final response to the user.");
-	М.Добавить("Pass the complete final response text in the ""text"" parameter.");
-	М.Добавить("Do NOT call this tool for intermediate reasoning, drafts, or raw tool outputs.");
-	М.Добавить("");
-	М.Добавить("This tool does NOT return de-anonymized text to you.");
-	М.Добавить("It only confirms receipt, for example {""received"": true}.");
-	М.Добавить("After calling this tool, send your original final response with tokens unchanged.");
-	М.Добавить("The user will see the de-anonymized version in their interface.");
-	Возврат СоединитьМассив(М, Символы.ПС);
-КонецФункции
+//--agent TASK-225 [26.09.2026 14:00:00]
+//Функция ОписаниеToolSubmitForDeanonymization()
+//	М = Новый Массив;
+//	М.Добавить("Submit the final user-facing response for de-anonymization display.");
+//	М.Добавить("");
+//	М.Добавить("You MUST call this tool if, and only if, your final response to the user contains");
+//	М.Добавить("anonymization tokens in the form [CATEGORY-NNNNN], for example [ORG-00001],");
+//	М.Добавить("[PER-00042], [INN-00001].");
+//	М.Добавить("");
+//	М.Добавить("Call this tool exactly once, immediately before sending the final response to the user.");
+//	М.Добавить("Pass the complete final response text in the ""text"" parameter.");
+//	М.Добавить("Do NOT call this tool for intermediate reasoning, drafts, or raw tool outputs.");
+//	М.Добавить("");
+//	М.Добавить("This tool does NOT return de-anonymized text to you.");
+//	М.Добавить("It only confirms receipt, for example {""received"": true}.");
+//	М.Добавить("After calling this tool, send your original final response with tokens unchanged.");
+//	М.Добавить("The user will see the de-anonymized version in their interface.");
+//	Возврат СоединитьМассив(М, Символы.ПС);
+//КонецФункции
+//--agent TASK-225
 
 Функция ОписаниеToolGetMetadata()
 	М = Новый Массив;
@@ -6896,9 +6902,11 @@
 	М.Добавить("    get_object_by_link(");
 	М.Добавить("        link=""e1cib/data/Справочник.Контрагенты?ref=80c6cc1a7e58902811ebcda8cb07c0f5""");
 	М.Добавить("    )");
-	Если АнонимизацияВключена Тогда
-		М.Добавить(ПримечаниеОбАнонимизации());
-	КонецЕсли;
+	//--agent TASK-225 [26.09.2026 14:00:00]
+//	Если АнонимизацияВключена Тогда
+//		М.Добавить(ПримечаниеОбАнонимизации());
+//	КонецЕсли;
+	//--agent TASK-225
 	Возврат СоединитьМассив(М, Символы.ПС);
 КонецФункции
 
@@ -6995,9 +7003,11 @@
 	М.Добавить("        search_scope=[""documents""],");
 	М.Добавить("        limit_hits=10");
 	М.Добавить("    )");
-	Если АнонимизацияВключена Тогда
-		М.Добавить(ПримечаниеОбАнонимизации());
-	КонецЕсли;
+	//--agent TASK-225 [26.09.2026 14:00:00]
+//	Если АнонимизацияВключена Тогда
+//		М.Добавить(ПримечаниеОбАнонимизации());
+//	КонецЕсли;
+	//--agent TASK-225
 	Возврат СоединитьМассив(М, Символы.ПС);
 КонецФункции
 
@@ -7053,9 +7063,11 @@
 	М.Добавить("        user_name=""Иванов"",");
 	М.Добавить("        rights_filter=[""Чтение"", ""Изменение""]");
 	М.Добавить("    )");
-	Если АнонимизацияВключена Тогда
-		М.Добавить(ПримечаниеОбАнонимизации());
-	КонецЕсли;
+	//--agent TASK-225 [26.09.2026 14:00:00]
+//	Если АнонимизацияВключена Тогда
+//		М.Добавить(ПримечаниеОбАнонимизации());
+//	КонецЕсли;
+	//--agent TASK-225
 	Возврат СоединитьМассив(М, Символы.ПС);
 КонецФункции
 
@@ -7213,18 +7225,20 @@
 	Возврат Схема;
 КонецФункции
 
-Функция СхемаSubmitForDeanonymization()
-	Свойства = Новый Структура;
-	Свойства.Вставить("text", Новый Структура("type, description",
-		"string", "The complete final response text containing anonymization tokens to be de-anonymized."));
-	Требуемые = Новый Массив;
-	Требуемые.Добавить("text");
-	Схема = Новый Структура;
-	Схема.Вставить("type", "object");
-	Схема.Вставить("properties", Свойства);
-	Схема.Вставить("required", Требуемые);
-	Возврат Схема;
-КонецФункции
+//--agent TASK-225 [26.09.2026 14:00:00]
+//Функция СхемаSubmitForDeanonymization()
+//	Свойства = Новый Структура;
+//	Свойства.Вставить("text", Новый Структура("type, description",
+//		"string", "The complete final response text containing anonymization tokens to be de-anonymized."));
+//	Требуемые = Новый Массив;
+//	Требуемые.Добавить("text");
+//	Схема = Новый Структура;
+//	Схема.Вставить("type", "object");
+//	Схема.Вставить("properties", Свойства);
+//	Схема.Вставить("required", Требуемые);
+//	Возврат Схема;
+//КонецФункции
+//--agent TASK-225
 
 Функция СтрокаСоответствуетISO8601ДатаВремя(СтрокаДаты)
 	
