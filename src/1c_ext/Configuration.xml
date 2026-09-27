@@ -71,6 +71,7 @@
 			<CommonModule>mcp_КонтейнерыПовтИсп</CommonModule>
 			<CommonModule>mcp_Метаданные</CommonModule>
 			<CommonModule>mcp_Выполнение</CommonModule>
+			<CommonModule>mcp_ГраницаДанныхКэш</CommonModule>
 			<CommonModule>mcp_Содержимое</CommonModule>
 			<HTTPService>mcp_APIBackend</HTTPService>
 			<DataProcessor>mcp_ИнструментыROCTUP</DataProcessor>
