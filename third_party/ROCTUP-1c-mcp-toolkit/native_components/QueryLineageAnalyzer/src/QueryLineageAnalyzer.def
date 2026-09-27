@@ -1,0 +1,6 @@
+LIBRARY QueryLineageAnalyzer
+EXPORTS
+    GetClassNames
+    GetClassObject
+    DestroyObject
+    SetPlatformCapabilities

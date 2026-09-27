@@ -37,9 +37,37 @@
 
 Текущие встроенные возможности:
 
-- `list_metadata_objects` - список объектов метаданных;
-- `get_metadata_structure` - структура объекта метаданных;
+- шесть ROCTUP server tools: `execute_query`, `get_metadata`, `get_object_by_link`,
+  `get_link_of_object`, `find_references_to_object`, `get_access_rights`;
+- source-side граница ROCTUP: descriptive schema/lineage и необратимая замена
+  паролей, токенов, ключей и значений реквизитов с `РежимПароля` на
+  `[SECRET_REMOVED]` до передачи результата manager-у;
+- два bounded-инструмента metadata/dictionary feed с `visibility=internal`;
+  manager не публикует их агенту. Словарный `filter_ast` проверяется по
+  типам и разрешённым полям метаданных, затем превращается в параметризованный
+  отбор запроса 1С; wildcard разворачивается до вызова 1С;
+- `validate_query` — сохранённый legacy tool; заменённые metadata/nav handlers
+  оставлены в коде, но сняты с публичной регистрации;
 - `1csyntax` - ресурс со справкой по встроенному языку 1С.
+
+ROCTUP-код перенесён из `ROCTUP/1c-mcp-toolkit` commit
+`fe12903af7a367a9d67dd055c13f4b59bb59d83c` под GPL-3.0; notices, исходники
+native-компонент и воспроизводимость сборки находятся в `third_party/`. Изменяемая
+policy, reversible mapping и masked history принадлежат внешнему masking service.
+Agent-facing submit/reveal controls не регистрируются. Старые persistent metadata
+и UI сохранены только до сверки с live DEV inventory и не входят в новый runtime
+route; удалять их до такой сверки нельзя.
+
+WS-регистрация передаёт настроенный стабильный `database_instance_id`. Значение
+обязательно: server channel fail closed, если администратор его не настроил.
+Деплой изменений visibility, manager и 1С должен быть атомарным.
+
+На 23.09.2026 расширение установлено в DEV-базу `gbig_pam_ai`: шесть ROCTUP
+tools вызваны через явную серверную WS-сессию, ответы получены без ошибок;
+для DEMO-аккаунта отдельно подтверждена необратимая замена трёх секретных
+полей на `[SECRET_REMOVED]`. Это не является приёмкой production-контура:
+живой тест маски ФИО, human reveal и загрузка Linux NativeAPI платформой
+пока не подтверждены.
 
 ## Целевая модель развития
 
