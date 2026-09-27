@@ -45,7 +45,6 @@
 			<Explanation/>
 		</Properties>
 		<ChildObjects>
-			<Template>QueryLineageAnalyzer</Template>
 		</ChildObjects>
 	</DataProcessor>
 </MetaDataObject>

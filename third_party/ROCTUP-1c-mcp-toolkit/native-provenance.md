@@ -1,5 +1,10 @@
 # ROCTUP native Linux provenance
 
+> Статус поставки: `QueryLineageAnalyzer` больше не поставляется и не
+> подключается расширением (макет удалён; lineage — только платформенная
+> `СхемаЗапроса`). Этот документ описывает историческую сборку upstream-
+> исходников, оставленных как архив provenance.
+
 ## Upstream и область
 
 - Upstream: `ROCTUP/1c-mcp-toolkit`, pin `fe12903af7a367a9d67dd055c13f4b59bb59d83c`.
