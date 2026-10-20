@@ -102,11 +102,6 @@ Manager не публикует эти два инструмента агент�
 `v8-session-manager`; здесь реализованы инструменты, граница данных и внутренние
 feeds. Совместимость конверта и feeds должна сохраняться между компонентами.
 
-Код ROCTUP перенесён из `ROCTUP/1c-mcp-toolkit`, commit
-`fe12903af7a367a9d67dd055c13f4b59bb59d83c`, под GPL-3.0.
-Атрибуции и условия стороннего кода перечислены в
-[THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
-
 ## Целевая модель развития
 
 Новые tools размещаются как обработки-контейнеры внутри расширения.
@@ -135,11 +130,29 @@ feeds. Совместимость конверта и feeds должна сох�
 
 Подробности текущего внутреннего API описаны в [`src/1c_ext/agents.md`](./src/1c_ext/agents.md).
 
-## Происхождение
+## Происхождение и благодарности
 
 Технически этот репозиторий начался как форк проекта [RooLee10/1c-mcp-tools](https://github.com/RooLee10/1c-mcp-tools), который, в свою очередь, основан на оригинальном проекте [vladimir-kharin/1c_mcp](https://github.com/vladimir-kharin/1c_mcp).
 
-Авторам исходных проектов - уважение и благодарность за основу и идею.
+Инструменты данных и вспомогательный BSL-код **заимствованы и адаптированы**
+из проекта [ROCTUP/1c-mcp-toolkit](https://github.com/ROCTUP/1c-mcp-toolkit).
+Основа переноса — commit
+[`fe12903af7a367a9d67dd055c13f4b59bb59d83c`](https://github.com/ROCTUP/1c-mcp-toolkit/tree/fe12903af7a367a9d67dd055c13f4b59bb59d83c),
+лицензия GPL-3.0. В частности, использованы ядра `execute_query`, `get_metadata`,
+`get_object_by_link`, `get_link_of_object`, `find_references_to_object`,
+`get_access_rights` и связанные вспомогательные функции. Код адаптирован
+к контейнерному API и границе данных этого расширения. Подробности переноса,
+исходные лицензии и notices сохранены в
+[third_party/ROCTUP-1c-mcp-toolkit](third_party/ROCTUP-1c-mcp-toolkit/README.md)
+и [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+
+Идеи диагностических возможностей также взяты из
+[cpr1c/tools_ui_1c](https://github.com/cpr1c/tools_ui_1c): новые серверные обёртки
+БСП, структуры хранения и настроек СКД реализованы самостоятельно; происхождение
+и границы заимствований описаны в notices.
+
+Благодарим авторов ROCTUP/1c-mcp-toolkit, RooLee10/1c-mcp-tools,
+vladimir-kharin/1c_mcp и tools_ui_1c за открытый код, инструменты и идеи.
 
 При этом в текущем репозитории существенная часть функциональности уже отломана от исходной реализации, переработана или будет заменяться. Поддерживать зависимость от upstream-проектов и сохранять совместимость с ними не планируется.
 
